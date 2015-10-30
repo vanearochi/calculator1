@@ -1,0 +1,18 @@
+
+.screen{
+	text-align: right;
+	height: 10%;
+	font-size: 3.5rem;
+	margin-right: 3%;
+}
+
+button{
+	height:10%;
+	
+
+}
+
+.container{
+	border-style: solid;
+	width:50%;
+}
