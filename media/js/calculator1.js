@@ -1,25 +1,20 @@
 $(document).ready(function(){
 	var arrPushedValue=[]
-	var regexNum=/\d/;
+	var regexNum=/[\d\.]/;
 	var temporalStorage="";
 	var result;
 	var backupArr=[];
 console.log("Welcome calculator")
 //arr to push 
-var pushvalue = function(val){
-	var temporal;
-	var strToNum;
-	if(regexNum.test(val)===true || val==="." ){
-		temporalStorage=temporalStorage+val;	
-    	display(temporalStorage)
-	}
-	else if(val==="ac"){
+
+var ac = function(){
 		arrPushedValue=[];
 		temporalStorage="";
 		backupArr=[];
 		display(0)
-	}
-	else if(val==="ce"){
+	};
+
+var ce = function(){
 		if(temporalStorage.length>0){
 		  	temporalStorage=""
 		  	display(arrPushedValue)
@@ -28,9 +23,27 @@ var pushvalue = function(val){
 			arrPushedValue.pop()
 			display(arrPushedValue)
 		}
+	};
+
+var pushvalue = function(val){
+	var temporal;
+	var strToNum;
+	if(regexNum.test(val)===true){
+		if(val==="."){ 
+			if (temporalStorage.indexOf(".")===-1){
+				temporalStorage=temporalStorage+val;	
+		    	display(temporalStorage)
+		    }
+    	}
+    	else {
+    		temporalStorage=temporalStorage+val;	
+	    	display(temporalStorage)
+    	}
 	}
 	
-		else if(temporalStorage.length>0){
+
+	
+	else if(temporalStorage.length>0){
 		temporalStorage=parseFloat(temporalStorage);
 		arrPushedValue.push(temporalStorage);
 		arrPushedValue.push(val)
@@ -122,34 +135,21 @@ var display = function(val){
 	$(".screen").html(val) 
 }
 
-$(".one").on("click", function(){
-	pushvalue(1)
-	
-});
- $(".two").on("click", function(){
- 	pushvalue(2)
- 	
+
+ $(".number").on("click", function(event){
+  var the_number = this.innerHTML;
+  console.log(the_number)
+  pushvalue(the_number)
+
  });
- $(".three").on("click", function(){
- 	pushvalue(3)
- 	
- });
- $(".four").on("click", function(){
- 	pushvalue(4)
- 	
- });
- $(".five").on("click", function(){pushvalue(5)});
- $(".six").on("click", function(){pushvalue(6)});
- $(".seven").on("click", function(){pushvalue(7)});
- $(".eight").on("click", function(){pushvalue(8)});
- $(".nine").on("click", function(){pushvalue(9)});
+ 
  $(".plus").on("click", function(){pushvalue("+")});
  $(".substraction").on("click", function(){pushvalue("-")});
  $(".division").on("click", function(){pushvalue("/")});
  $(".multiplication").on("click", function(){pushvalue("*")});
  $(".dot").on("click", function(){pushvalue(".")});
- $(".ac").on("click", function(){pushvalue("ac")});
- $(".ce").on("click", function(){pushvalue("ce")});
+ $(".ac").on("click", function(){ac()});
+ $(".ce").on("click", function(){ce()});
  $(".equal").on("click", function(){
 
  	pushvalue("=")
